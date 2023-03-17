@@ -53,6 +53,11 @@ pipeline {
         sh 'docker stop flask-app || true; docker rm flask-app || true;docker run -d --name flask-app -p 9000:9000 pawelpl/epam_cicd_online_session:latest'
       }
     }
+    stage('Validation') {
+      steps {
+        sh 'curl -i http://localhost:9000/test_string'
+      }
+    }
     
   }
   environment {
