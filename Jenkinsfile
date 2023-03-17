@@ -28,7 +28,6 @@ pipeline {
           }
       }
     }
-    
     stage('build') {
       steps {
         script {
@@ -69,7 +68,7 @@ pipeline {
         script {
           sh 'mkdir -p reports'
           sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl'
-          def vulnerabilities = sh(script: "trivy image --ignore-unfixed --severity HIGH,MEDIUM --format template --template '@html.tpl' -o reports/image-scan.html --no-progress ${registry}:${env.BUILD_ID}", returnStdout: true).trim()
+          def vulnerabilities = sh(script: "trivy image --ignore-unfixed --exit-code 0 --severity HIGH,MEDIUM,LOW --format template --template '@html.tpl' -o reports/image-scan.html --no-progress ${registry}:${env.BUILD_ID}", returnStdout: true).trim()
           echo "Vulnerability Report:\n${vulnerabilities}"
           publishHTML target : [
                     allowMissing: true,
@@ -97,7 +96,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh 'docker stop flask-app || true; docker rm flask-app || true;docker run -d --name flask-app -p 9000:9000 pawelpl/epam_cicd_online_session:latest'
+        sh 'docker stop flask-app || true; docker rm flask-app || true;docker run -d --name flask-app -p 9000:9000 pawelpl/epam_cicd_online_session'
       }
     }
     stage('Validation') {
@@ -105,7 +104,6 @@ pipeline {
         sh 'curl -i http://localhost:9000/test_string'
       }
     }
-    
   }
   environment {
     registry = 'pawelpl/epam_cicd_online_session'
