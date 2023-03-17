@@ -50,14 +50,13 @@ pipeline {
       }
 
     }
-    stage('Deploy') {
-      steps {
-        sh 'docker stop flask-app || true; docker rm flask-app || true;docker run -d --name flask-app -p 9000:9000 pawelpl/epam_cicd_online_session:latest'
+      stage('Deploy') {
+        steps {
+          sh 'docker stop flask-app || true; docker rm flask-app || true;docker run -d --name flask-app -p 9000:9000 pawelpl/epam_cicd_online_session:latest'
+        }
       }
     }
-  
-}
     environment {
       registry = 'pawelpl/epam_cicd_online_session'
     }
-  }
+}
