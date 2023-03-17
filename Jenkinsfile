@@ -56,7 +56,7 @@ pipeline {
     }
   }
   
-
+}
     environment {
       registry = 'pawelpl/epam_cicd_online_session'
     }
