@@ -26,6 +26,16 @@ pipeline {
             sh "sleep 5; curl -i http://localhost:9005/test_string"}
         }
       }
+      
+      post {
+        success {
+            echo 'Code quality check passed'
+        }
+        failure {
+          echo 'Code quality check failure'
+        }
+      }
+      
     }
     
     stage('Publish') {
