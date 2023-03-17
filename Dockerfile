@@ -3,7 +3,7 @@ FROM python:3
 WORKDIR /usr/src/app
 #install requirements
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r reqirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 #install applications
 COPY app.py ./
 copy app_test.py ./
